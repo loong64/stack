@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (c) 2023 Olivier Benz.
+# Copyright (c) 2026 Olivier Benz.
 # Distributed under the terms of the MIT License.
 
 set -e
@@ -22,8 +22,8 @@ if [[ "$MODE" == "install" ]]; then
   cd /tmp
   git clone https://github.com/commercialhaskell/stack.git
   cd stack
-  git checkout v"$STACK_VERSION_BUILD"
-  stack -j"$(nproc)" install \
+  git checkout v3.9.3
+  stack -j2 install \
     --no-install-ghc \
     --system-ghc \
     --flag=stack:static \

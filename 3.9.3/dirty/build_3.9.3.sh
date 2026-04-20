@@ -5,13 +5,15 @@
 chmod +x scripts/start.sh
 
 # Install emulator (Docker CE)
-docker run --privileged --rm tonistiigi/binfmt --install loong64
+if [ "$(uname -m)" != "loongarch64" ]; then
+  docker run --privileged --rm tonistiigi/binfmt --install loong64
+fi
 
 # Install emulator (Docker Desktop)
 #docker run --privileged --rm tonistiigi/binfmt:desktop-master --install loong64
 
 docker build \
   --platform linux/loong64 \
-  -t ghcr.io/loong64/commercialhaskell/ssi:3.7.1-linux-loong64 \
-  -f 3.7.1.Dockerfile \
+  -t ghcr.io/loong64/commercialhaskell/ssi:3.9.3-dirty-linux-loong64 \
+  -f 3.9.3.Dockerfile \
   .

@@ -1,17 +1,19 @@
 ARG IMAGE=ghcr.io/loong64/ghc/ghc-musl
-ARG GHC_VERSION=9.12.2
+ARG GHC_VERSION=9.14.1
 ARG PREFIX=/usr/local
 
-FROM ${IMAGE}:${GHC_VERSION}-nostack-linux-loong64 AS builder
+FROM ${IMAGE}:${GHC_VERSION} AS builder
 
-ARG CABAL_VERSION_MIN=3.14.1.0
-ARG STACK_VERSION_BUILD=3.7.1
+ARG STACK_VERSION_BUILD=3.9.3
 ARG PREFIX
 ARG MODE=install
 
 COPY scripts/*.sh /usr/bin/
 
+COPY --from=ghcr.io/loong64/commercialhaskell/ssi:3.9.3-dirty-linux-loong64 /usr/local/bin/stack /usr/local/bin
+
 RUN mkdir -p "/tmp$PREFIX/bin" \
+ && stack --version \
  && start.sh
 
 FROM scratch

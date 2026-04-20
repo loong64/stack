@@ -4,14 +4,11 @@ ARG PREFIX=/usr/local
 
 FROM ${IMAGE}:${GHC_VERSION}-nostack-linux-loong64 AS builder
 
-ARG CABAL_VERSION_MIN=3.14.1.0
-ARG STACK_VERSION_BUILD=3.7.1
+ARG STACK_VERSION_BUILD=3.9.3
 ARG PREFIX
 ARG MODE=install
 
 COPY scripts/*.sh /usr/bin/
-
-COPY --from=ghcr.io/loong64/commercialhaskell/ssi:3.7.1-dirty-linux-loong64 /usr/local/bin/stack /usr/local/bin/stack
 
 RUN mkdir -p "/tmp$PREFIX/bin" \
  && start.sh

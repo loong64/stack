@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright (c) 2023 Olivier Benz.
+# Copyright (c) 2026 Olivier Benz.
 # Distributed under the terms of the MIT License.
 
 set -e
@@ -20,13 +20,6 @@ fi
 if [[ "$MODE" == "install" ]]; then
   cabal update
 
-  if dpkg --compare-versions "$(cabal --numeric-version)" lt "$CABAL_VERSION_MIN"; then
-    # Install Cabal
-    cabal install "cabal-install-$CABAL_VERSION_MIN"
-    echo "Copying 'cabal' to '$(which cabal)'"
-    cp -aL /root/.local/bin/cabal "$(which cabal)"
-  fi
-
   # Download and extract source code
   cd /tmp
   curl -sSL https://github.com/commercialhaskell/stack/archive/refs/tags/v"$STACK_VERSION_BUILD".tar.gz \
@@ -35,13 +28,14 @@ if [[ "$MODE" == "install" ]]; then
   cd stack-*
 
   # Modify config
-  sed -i s/ghc-9.8.4/ghc-9.12.2/g cabal.project
+  sed -i s/ghc-9.10.3/ghc-9.12.2/g cabal.project
   sed -i /^import/d cabal.project
 
   # Build and install
-  cabal -j"$(nproc)" build \
+  cabal -j2 build \
     --enable-executable-static \
-    --ghc-options='-split-sections -optl=-pthread'
+    --ghc-options='-split-sections -optl=-pthread' \
+    --constraint='tls == 2.2.2'
 
   strip "$(find dist-newstyle -name stack -type f)"
 
