@@ -14,6 +14,6 @@ fi
 
 docker build \
   --platform linux/loong64 \
-  -t ghcr.io/loong64/commercialhaskell/ssi:3.9.3-dirty-linux-loong64 \
-  -f 3.9.3.Dockerfile \
+  -t ghcr.io/loong64/commercialhaskell/ssi:3.9.1-dirty-linux-loong64 \
+  -f 3.9.1.Dockerfile \
   .

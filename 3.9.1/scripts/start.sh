@@ -22,7 +22,7 @@ if [[ "$MODE" == "install" ]]; then
   cd /tmp
   git clone https://github.com/commercialhaskell/stack.git
   cd stack
-  git checkout v3.9.3
+  git checkout v3.9.1
   stack -j2 install \
     --no-install-ghc \
     --system-ghc \
